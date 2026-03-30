@@ -1,0 +1,133 @@
+Código;Função
+000;Indeterminada (Função)
+005;Actor
+010;Adaptador
+018;Autor da animação
+020;Anotador
+030;Autor de arranjo musical
+040;Artista
+050;Responsável editorial
+060;Nome associado
+065;Leiloeiro
+070;Autor
+072;Autor em citações ou excertos de textos
+075;Autor do posfácio, cólofon, etc.
+080;Autor da introdução, etc.
+090;Autor de diálogo
+100;Antecedente bibliográfico
+110;Encadernador
+120;Responsável pela concepção da encadernação
+130;Responsável pela concepção gráfica do livro
+140;Responsável pela concepção da capa e sobrecapa
+150;Responsável pela concepção dos extratextos
+160;Livreiro
+170;Calígrafo
+180;Cartógrafo
+190;Censor
+195;Maestro de coro
+200;Coreógrafo
+202;Artista circense
+205;Colaborador
+206;Responsável pela recolha de material de campo
+207;Humorista
+210;Comentador (em meio audiovisual)
+212;Comentador de texto escrito
+220;Compilador
+230;Compositor
+233;Compositor da obra adaptada
+236;Compositor da obra musical principal
+240;Compositor gráfico
+245;Autor da ideia original
+250;Maestro
+255;Consultor de projecto
+257;Continuador
+260;Detentor dos direitos de autor
+270;Corrector
+273;Organizador de exposição
+275;Bailarino
+280;Personalidade a quem é dedicada a obra
+290;Autor da dedicatória
+295;Instituição que confere o grau académico
+300;Director
+303;Disco jóquei
+305;Dissertador
+310;Distribuidor
+320;Doador
+330;Autor incerto
+340;Editor literário
+350;Gravador
+360;Gravador (aguafortista)
+365;Perito
+370;Responsável pela montagem de filmes
+380;Contrafactor
+390;Antigo possuidor
+395;Fundador
+400;(Obsoleto)
+410;Técnico gráfico
+420;Homenageado
+430;Iluminista
+440;Ilustrador
+445;Empresário (teatral/musical)
+450;Autor da apresentação
+460;Entrevistado
+470;Entrevistador
+475;Colectividade editora
+480;Libretista
+490;Detentor de licença
+500;Pessoa que concede a licença
+510;Litógrafo
+520;Autor de letras para trechos musicais
+530;Gravador em metal
+535;Mímico
+540;Supervisor
+545;Músico
+550;Narrador
+555;Arguente
+557;Organizador de conferência
+560;Investigador
+570;Outro
+580;Fabricante de papel
+582;Requerente de registo de patente
+584;Inventor
+587;Detentor da patente
+590;Intérprete
+595;Entidade responsável pela pesquisa
+600;Fotógrafo
+605;Apresentador
+610;Impressor
+620;Impressor de ilustrações em chapa gravada
+630;Produtor
+632;Director artístico
+633;Equipa de produção
+635;Programador
+637;Gestor de projecto
+640;Revisor
+650;Editor comercial
+651;Director de publicação
+655;Marionetista
+660;Destinatário de carta(s)
+665;Produtor discográfico
+670;Técnico de gravação sonora
+672;Responsável pela mistura de som
+673;Investigador responsável
+675;Autor de recensão
+677;Membro da equipa de investigação
+680;Rubricator
+690;Cenógrafo
+695;Consultor científico
+700;Escriba
+705;Escultor
+710;Relator
+720;Autor de assinatura manuscrita
+721;Cantor
+723;Patrocinador
+725;Entidade normalizadora
+726;Duplo
+727;Orientador de tese
+730;Tradutor
+740;Responsável pela concepção do tipo
+750;Tipógrafo
+753;Vendedor
+755;Vocalista
+760;Gravador em madeira
+770;Autor do material acompanhante
