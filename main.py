@@ -31,7 +31,7 @@ if __name__ == "__main__":
         db.auto_increment('wordpress', 'wp_terms', 1)
         #ALTER TABLE wordpress.wp_terms AUTO_INCREMENT = 1
 
-        db.delete('wordpress_temp', 'all_categories', 1)
+        #db.delete('wordpress_temp', 'all_categories', 1)
         #DELETE FROM wordpress_temp.all_categories
 
         db.delete('wordpress', 'wp_term_taxonomy', 1)
@@ -63,28 +63,30 @@ if __name__ == "__main__":
         images_categories_filename = 'imagens/categories-images.csv'
         category_suffix = '_cat'
         create_categories(db, categories_filename, [], category_suffix)
-        create_temp_categories(db)
+        #create_temp_categories(db)
         
         
         create_other_categories(db)
-        #create_categories(db, images_categories_filename, [], '')
+        create_categories(db, images_categories_filename, [], '')
         create_taxonomies(db)
         # the ID (auto-incremented value, should start in 6092 for the catalogo data)
         create_posts(db, 6092, 'catalogo')
-        #create_posts(db, 7341, 'imagens')
+        create_posts(db, 7341, 'imagens1')
         
         create_terms_relationships(db, 'catalogo')
         create_other_terms_relationships(db, 'catalogo', ['autor', 'tipo de material', 'línguas', 'seculo de publicação', 'data de publicação'])
-        #create_terms_relationships(db, 'imagens')
+        create_terms_relationships(db, 'imagens1')
 
         create_posts_images(db, 'catalogo')
-        #create_posts_images(db, 'imagens')
+        create_posts_images(db, 'imagens1')
 
         create_postmeta_thumbs(db, 9647, 'catalogo')
-        #create_postmeta_thumbs(db, 0, 'imagens')
+        # create_postmeta_thumbs(db, 0, 'imagens1')
+        create_postmeta_thumbs(db, 0, 'imagens2')
 
         create_postmeta_metadata(db, 0, 'catalogo')
-        #create_postmeta_metadata(db, 0, 'imagens')        
+        # create_postmeta_metadata(db, 0, 'imagens1')
+        create_postmeta_metadata(db, 0, 'imagens2')
 
         #create_csv_with_posts_and_images(db, 6092)
         

@@ -68,52 +68,52 @@ def generate_php_serialized_metadata(image_path, filename):
 
 def create_postmeta_metadata(db, id, collection):
 
-    print("################################", id, collection)
+    print("COLLECTION: ", collection)
+    
     record = {}
 
     catalogo_path_to_folder = "2025/capas/"
-    imagens_path_to_folder = "2025/imagens/"
+    # imagens_path_to_folder = "2025/imagens/"
 
-    result = db.get_posts_with_attachment_type(collection)
-    # print("RESULT: ******************", result)
+    if collection == 'catalogo':
+        result = db.get_posts_with_attachment_type(collection)
+    
+    elif collection == 'imagens1' or collection == 'imagens2':
+        result = db.get_posts_with_attachment_type_images(collection)
+        
+        
+    
+    print("RESULT: ******************", result)
 
     for row in result:
         post_id = row['ID']
         ncb = row['post_title']
         print(post_id)
 
-        if collection == 'imagens':
+        if collection == 'imagens1' or collection == 'imagens2':
             volume = row['volume']
             imagem = row['imagem']
 
         # Skip if metadata already exists for this post
-        if collection == 'catalogo':
-            existing = db.get_postmeta(post_id)
-            if existing:
-                print(f"Skipping post_id {post_id}, metadata already exists")
-                continue
+        # elif collection == 'catalogo':
+        #     existing = db.get_postmeta(post_id)
+        #     if existing:
+        #         print(f"Skipping post_id {post_id}, metadata already exists")
+        #         continue
 
-
+        print("################################", id, collection)
         if collection == 'catalogo':
             metadata = generate_php_serialized_metadata(catalogo_path_to_folder, str(ncb))
 
             if len(metadata) > 0:
-
-                # if collection == 'catalogo':
                 db.insert_post_metadata(post_id, "_wp_attached_file", f"{catalogo_path_to_folder}{ncb}.jpg")
-                
                 db.insert_post_metadata(post_id, "_wp_attachment_metadata", metadata)
-
                 db.insert_post_metadata(post_id, "_wp_attachment_image_alt", "Capa da obra")
 
-
-        elif collection == 'imagens':
-                metadata = generate_php_serialized_metadata(imagens_path_to_folder, str(ncb))
-
-                db.insert_post_metadata(post_id, "_wp_attached_file", f"{imagens_path_to_folder}{ncb}-{volume}-{imagem}.jpg")
-            
+        elif collection == 'imagens1' or collection == 'imagens2':
+                metadata = generate_php_serialized_metadata('2025/imagens/', str(ncb))
+                db.insert_post_metadata(post_id, "_wp_attached_file", f"2025/capas/{ncb}.jpg")
                 db.insert_post_metadata(post_id, "_wp_attachment_metadata", metadata)
-
                 db.insert_post_metadata(post_id, "_wp_attachment_image_alt", "página")
             
             

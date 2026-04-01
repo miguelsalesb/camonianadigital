@@ -191,29 +191,56 @@ class DatabaseManager:
             return []
 
 
+    # def get_posts_with_attachment_type(self, collection):
+    #     cursor = self.get_dictionnary_cursor("wordpress", dictionary=True)
+    #     if collection == 'catalogo':
+    #         try:
+    #             cursor.execute(f"SELECT ID, post_title FROM wordpress.wp_posts WHERE post_type = 'attachment'")
+    #             return cursor.fetchall()
+    #         except mariadb.Error as e:
+    #             print(f"Error fetching catalogo: {e}")
+    #             return []
+    #     elif collection == 'imagens':
+    #         try:
+    #             cursor.execute(f"SELECT w.ID, w.post_title, c.volume, c.imagem FROM wordpress.wp_posts w JOIN csv_data.{collection} c ON w.ID = c.id WHERE w.post_type = 'attachment'")
+    #             return cursor.fetchall()
+    #         except mariadb.Error as e:
+    #             print(f"Error fetching catalogo: {e}")
+    #             return []           
+
+
     def get_posts_with_attachment_type(self, collection):
         cursor = self.get_dictionnary_cursor("wordpress", dictionary=True)
-        if collection == 'catalogo':
-            try:
-                cursor.execute(f"SELECT ID, post_title FROM wordpress.wp_posts WHERE post_type = 'attachment'")
-                return cursor.fetchall()
-            except mariadb.Error as e:
-                print(f"Error fetching catalogo: {e}")
-                return []
-        elif collection == 'imagens':
-            try:
-                cursor.execute(f"SELECT w.ID, w.post_title, c.volume, c.imagem FROM wordpress.wp_posts w JOIN csv_data.{collection} c ON w.ID = c.id WHERE w.post_type = 'attachment'")
-                return cursor.fetchall()
-            except mariadb.Error as e:
-                print(f"Error fetching catalogo: {e}")
-                return []            
+        try:
+            cursor.execute(f"SELECT ID, post_title FROM wordpress.wp_posts WHERE post_type = 'attachment'")
+            return cursor.fetchall()
+        except mariadb.Error as e:
+            print(f"Error fetching catalogo: {e}")
+            return []
+
+
+    def get_posts_with_attachment_type_images(self, collection):
+        cursor = self.get_dictionnary_cursor("wordpress", dictionary=True)
+        try:
+            cursor.execute(f"SELECT w.ID, w.post_title, c.volume, c.imagem \
+                FROM wordpress.wp_posts w \
+                JOIN csv_data.{collection} c ON w.ID = c.id \
+                WHERE w.post_type = 'attachment'")
+            return cursor.fetchall()
+        except mariadb.Error as e:
+            print(f"Error fetching catalogo: {e}")
+            return []            
 
 
     def get_postmeta(self, post_id):
         cursor = self.get_dictionnary_cursor("wordpress", dictionary=True)
     
         try:
-            cursor.execute(f"SELECT * FROM wordpress.wp_postmeta WHERE post_id = {post_id} and meta_key = '_wp_attached_file'")
+            cursor.execute("SELECT w.ID, w.post_title, c.volume, c.imagem \
+                FROM wordpress.wp_posts w \
+                JOIN csv_data.imagens2 c ON w.ID = c.id \
+                WHERE w.post_type = 'attachment'")
+
             return cursor.fetchall()
         except mariadb.Error as e:
             print(f"Error fetching catalogo: {e}")

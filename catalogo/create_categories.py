@@ -53,11 +53,11 @@ def create_categories(db, categories_filename, list_of_categories, category_suff
                         # Change before writing the slugs 
                         # to: cat, aut, ed, lang, etc.
                                 if 'Cantos' in categories:
-                                    category_suffix = '_pa_cantos'
+                                    slugs_text = "".join(slugs) + '_pa_cantos'
                                 elif 'Episódios' in categories:
-                                    category_suffix = '_pa_episodios'
+                                    slugs_text = "".join(slugs) + '_pa_episodios'
                                 elif 'Imagens' in categories:
-                                    category_suffix = ''
+                                    slugs_text = "".join(slugs) + ''
                             slugs_text = "".join(slugs) + category_suffix
                             print(slugs_text)
                         

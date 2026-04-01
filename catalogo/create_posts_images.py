@@ -29,6 +29,7 @@ def remove_diacritics(input_str):
 
 
 def get_record_data(row, count, collection):
+	
 	record = {}
 	
 	# To present the illustrator name
@@ -41,29 +42,38 @@ def get_record_data(row, count, collection):
 
 	ncb = row["ncb"]
 	post_id = row["ID"]
-
+	
+	if collection == 'imagens1' or collection == 'imagens2':
+		volume = row["volume"]
+		page_number = row['imagem']		
+		record["post_title"] = f"{ncb}-{volume}-{page_number}"
+		record["post_name"] = f"{ncb}-{volume}-{page_number}"
+	elif collection == 'catalogo':
+		record["post_title"] = ncb
+		record["post_name"] = ncb
 	# Truncar título com mais de 200 letras
 	# No post_name retirar os diacriticos
 	record["post_author"] = 1
 	record["post_date"] = formatted_time
 	record["post_date_gmt"] = formatted_time
 	record["post_content"] = ""
-	record["post_title"] = ncb
+
 	record["post_excerpt"] = ""
 	record["post_status"] = "inherit"
 	record["comment_status"] = "closed"
 	record["ping_status"] = "closed"
 	record["post_password"] = ""
-	record["post_name"] = ncb
+
 	record["post_modified"] = formatted_time
 	record["post_modified_gmt"] = formatted_time
 	record["post_parent"] = post_id
 
-	if collection == 'imagens':
-		volume = row["volume"]
-		page_number = row['imagem']
-		record["guid"] = f"{BASE_URL}/wp-content/uploads/2025/imagens/{ncb}/{ncb}-{volume}-{page_number}.jpg"
-	else:
+
+	print("COLLECTION: 	", collection)
+	if collection == 'imagens1' or collection == 'imagens2':
+
+		record["guid"] = f"{BASE_URL}/wp-content/uploads/2025/capas/{ncb}-{volume}-{page_number}.jpg"
+	elif collection == 'catalogo':
 		record["guid"] = f"{BASE_URL}/wp-content/uploads/2025/capas/{ncb}.jpg"
 	
 	# record["guid"] = f"{SITE_URL}/wp-content/uploads/2025/capas/{ncb}.jpg"
@@ -85,11 +95,11 @@ def create_posts_images(db, collection):
 
 	for row in results:
 		count += 1
-		
+
 		print(row["ncb"])
 
 		record = get_record_data(row, count, collection)
-		
+
 		db.insert_post(record["post_author"], record["post_date"], record["post_date_gmt"], record["post_content"], record["post_title"], record["post_excerpt"], record["post_status"], record["comment_status"], record["ping_status"], record["post_password"], record["post_name"], '', '', record["post_modified"], record["post_modified_gmt"], '', record["post_parent"], record["guid"], record["menu_order"], record["post_type"], record["post_mime_type"], record["comment_count"])
 		print("\n", record)
 

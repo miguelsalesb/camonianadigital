@@ -90,15 +90,7 @@ def get_record_data(row, collection):
 	access = row["acesso"]
 
 
-	if collection == 'imagens':
-		folder = row["pasta"]
-		volume = row["volume"]
-		page_number = row['imagem']
-		page_url = row['url_pagina']
-		post_data_to_add = (
-    (f"<div class='book-field'><strong>Número da página: </strong>{page_number}</div>" if page_number != '' else '') +
-    (f"<div class='book-field'><strong>Link para a página da imagem: </strong>{page_url}</div>" if page_url != '' else '')
-)
+
 
 	# Some titles and subtitles have two spaces between words and
 	#  that causes errors in the post_name, so the two spaces have to be converted to one
@@ -137,13 +129,26 @@ def get_record_data(row, collection):
 		
 	post_name = remove_diacritics(post_name.lower().rstrip().replace(" ", "-").replace("  ", "").replace(",", "").replace(".", "").replace("&","").replace("---", "-").replace("--", "-").replace("...", ""))
 	
+	post_data_to_add = ''
+	
+	if collection == 'imagens1' or collection == 'imagens2':
+		folder = row["pasta"]
+		volume = row["volume"]
+		page_number = row['imagem']
+		page_url = row['url_pagina']
+		post_name = f"{post_name}-{ncb}-{volume}-{page_number}"
+		post_data_to_add = (
+    (f"<div class='book-field'><strong>Número da página: </strong>{page_number}</div>" if page_number != '' else '') +
+    (f"<div class='book-field'><strong>Link para a página da imagem: </strong><a href='{page_url}'>{page_url}</a></div>" if page_url != '' else '')
+)	
+	
 	if collection == 'catalogo':
 		post_name = f"{post_name}-{ncb}"
 
 	# Post name has to be different because it is part of the url and
 	# "volume-image number" dos the job
-	elif collection == 'imagens':
-		post_name = f"{post_name}-{ncb}-{volume}-{page_number}"
+	# elif collection == 'imagens':
+		
 
 	# Truncar título com mais de 200 letras
 	# No post_name retirar os diacriticos
@@ -164,6 +169,8 @@ def get_record_data(row, collection):
 		record["post_title"] = f"{title} : {subtitle}"
 	elif subtitle == "" and date_of_publication != "":
 		record["post_title"] = f"{title}. - {date_of_publication}"
+
+
 
 	record["post_excerpt"] =  	(
 							(f"<div class='book-container'>") +
@@ -194,6 +201,7 @@ def get_record_data(row, collection):
 							(f"<div class='book-field'><strong>Tipo: </strong>{material_type}</div>" if material_type != '' else '') +
 							(f"<div class='book-field'><strong class='acesso'>Acesso: </strong>{access} (acessível apenas na rede interna da BNP)</div>" if access != '' and access == 'Interno' else '') +
 							(f"<div class='book-field'><strong>Acesso: </strong>{access}</div>" if access != '' and access == 'Livre' else '') +
+							post_data_to_add +
 							(f"</div>") +
 							(f"</div>")
 	)
