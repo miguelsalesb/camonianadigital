@@ -26,7 +26,7 @@ def get_id(db, slugs_list):
 
         if results:
             ids_list.append(results[0]["term_id"])
-            print("*************", results[0] if results else None)
+            # print("*************", results[0] if results else None)
 
     return remove_duplicates(ids_list)
 

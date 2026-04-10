@@ -32,7 +32,7 @@ def create_other_categories(db):
 
     for row in get_temp_category:
         
-        print("ROW: ", row)
+        # print("ROW: ", row)
         term = row[2].strip()
         # taxonomy = row[3]
         slug = row[3]
@@ -41,9 +41,8 @@ def create_other_categories(db):
         list_of_categories['slug'] = slug
 
         get_category = db.get_category(term)
-        print("GET CATEGORY: ", get_category, term)
+        print("CATEGORY: ", term)
         if get_category:
            
            continue
-        print("33333333333333333333333333")
         create_categories(db,'', list_of_categories, category_suffix)

@@ -164,7 +164,10 @@ class DatabaseManager:
     def get_id_and_ncb(self, collection):
         cursor = self.get_dictionnary_cursor("csv_data", dictionary=True)
         try:
-            cursor.execute(f"SELECT id, ncb FROM csv_data.{collection} ")
+            if collection == 'catalogo':
+                cursor.execute(f"SELECT id, ncb FROM csv_data.{collection} ")
+            elif collection == 'imagens':
+                cursor.execute(f"SELECT id, ncb, ncb2 FROM csv_data.{collection} ")
             return cursor.fetchall()
         except mariadb.Error as e:
             print(f"Error fetching catalogo: {e}")

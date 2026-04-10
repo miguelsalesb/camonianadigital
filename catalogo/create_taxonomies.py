@@ -1,5 +1,6 @@
 import os
 import mysql.connector
+import time
 
 # CRIA AS TAXONOMIAS
 
@@ -8,7 +9,9 @@ def create_taxonomies(db):
     categories = db.get_categories()
     count= 0
 
-    if categories: 
+    if categories:
+        
+        
         for i in range(len(categories)):
             # count is the same number as the term_id from table wp_items
             count += 1
@@ -35,7 +38,7 @@ def create_taxonomies(db):
             elif '_cantos' in categories[i][2]:
                 taxonomy = 'pa_cantos'
             elif '_episodios' in categories[i][2]:
-                taxonomy = 'pa_episodios'                
+                taxonomy = 'pa_episodios'
             # elif '_ano' in categories[i][2]:
             #     taxonomy = 'pa_ano'
             else:

@@ -75,7 +75,7 @@ def create_temp_categories(db):
 
                 print("\n\n", record_data)
             for key, values in record_data.items():
-                print("#######################", key, values)
+                # print(key, values)
                 if 'purl' in record_data and record_data['purl']:
                     
                     if key != 'ncb' and key != 'purl' and key != 'edição':

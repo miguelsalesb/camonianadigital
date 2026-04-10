@@ -53,7 +53,7 @@ def remove_diacritics(input_str):
 
 def get_record_data(row, collection):
 	record = {}
-	print("ROW********************************:", row)
+	# print("ROW********************************:", row)
 	# To present the illustrator name
 	 
 	# fields to include in the post_content
@@ -131,17 +131,29 @@ def get_record_data(row, collection):
 	
 	post_data_to_add = ''
 	
-	if collection == 'imagens1' or collection == 'imagens2':
+	if collection == 'imagens' or collection == 'imagens2':
 		folder = row["pasta"]
 		volume = row["volume"]
 		page_number = row['imagem']
 		page_url = row['url_pagina']
-		post_name = f"{post_name}-{ncb}-{volume}-{page_number}"
+		post_name = f"{post_name}-{ncb}{volume}{page_number}"
 		post_data_to_add = (
     (f"<div class='book-field'><strong>Número da página: </strong>{page_number}</div>" if page_number != '' else '') +
     (f"<div class='book-field'><strong>Link para a página da imagem: </strong><a href='{page_url}'>{page_url}</a></div>" if page_url != '' else '')
 )	
-	
+	if author or co_author or author_organization or co_author_organization:
+		others = ( 
+			(f"<div class='book-field'><strong>Outros: </strong>{other_author} ; {other_author_organization}</div>" if other_author != '' and other_author_organization != '' else '') +
+			(f"<div class='book-field'><strong>Outros: </strong>{other_author}</div>" if other_author != '' and other_author_organization == '' else '') +
+			(f"<div class='book-field'><strong>Outros: </strong>{other_author_organization}</div>" if other_author_organization != '' and other_author == '' else '')
+		)			
+	else:
+		others = ( 
+			(f"<div class='book-field'><strong>Autores: </strong>{other_author} ; {other_author_organization}</div>" if other_author != '' and other_author_organization != '' else '') +
+			(f"<div class='book-field'><strong>Autores: </strong>{other_author}</div>" if other_author != '' and other_author_organization == '' else '') +
+			(f"<div class='book-field'><strong>Autores: </strong>{other_author_organization}</div>" if other_author_organization != '' and other_author == '' else '')
+		)	
+
 	if collection == 'catalogo':
 		post_name = f"{post_name}-{ncb}"
 
@@ -164,11 +176,11 @@ def get_record_data(row, collection):
 	
 	# The title has the date if it exists
 	if subtitle != "" and date_of_publication != "":
-		record["post_title"] = f"{title} : {subtitle}. - {date_of_publication}"
+		record["post_title"] = f"{title}: {subtitle} ({date_of_publication})"
 	elif subtitle != "" and date_of_publication == "":
-		record["post_title"] = f"{title} : {subtitle}"
+		record["post_title"] = f"{title}: {subtitle}"
 	elif subtitle == "" and date_of_publication != "":
-		record["post_title"] = f"{title}. - {date_of_publication}"
+		record["post_title"] = f"{title} ({date_of_publication})"
 
 
 
@@ -178,15 +190,14 @@ def get_record_data(row, collection):
 							(f"<div class='book-info'>") +
 							# PAGE INFORMATION
 							# WORK INFORMATION							
-							(f"<div class='book-field'><strong>Língua: </strong>{language}</div>" if language != '' else '') +
-							(f"<div class='book-field'><strong>Edição: </strong>{edition}</div>" if edition != '' else '') +
 							(f"<div class='book-field'><strong>Autor: </strong>{author}</div>" if author != '' else f"<div class='book-field'><strong>Autor: </strong>{author_organization}</div>" if author_organization != '' else '') +
 							(f"<div class='book-field'><strong>Co-autores: </strong>{co_author} ; {co_author_organization}</div>" if co_author != '' and co_author_organization != '' else '') +
 							(f"<div class='book-field'><strong>Co-autores: </strong>{co_author}</div>" if co_author != '' and co_author_organization == '' else '') +
 							(f"<div class='book-field'><strong>Co-autores: </strong>{co_author_organization}</div>" if co_author_organization != '' and co_author == '' else '') +
-							(f"<div class='book-field'><strong>Outros: </strong>{other_author} ; {other_author_organization}</div>" if other_author != '' and other_author_organization != '' else '') +
-							(f"<div class='book-field'><strong>Outros: </strong>{other_author}</div>" if other_author != '' and other_author_organization == '' else '') +
-							(f"<div class='book-field'><strong>Outros: </strong>{other_author_organization}</div>" if other_author_organization != '' and other_author == '' else '') +
+							# (f"<div class='book-field'><strong>Outros: </strong>{other_author} ; {other_author_organization}</div>" if other_author != '' and other_author_organization != '' else '') +
+							# (f"<div class='book-field'><strong>Outros: </strong>{other_author}</div>" if other_author != '' and other_author_organization == '' else '') +
+							# (f"<div class='book-field'><strong>Outros: </strong>{other_author_organization}</div>" if other_author_organization != '' and other_author == '' else '') +
+							others +
 							(f"<div class='book-field'><strong>Publicação: </strong>" if publication != '' or date_of_publication != '' else '') +
 							(f"{publication}" if publication != '' else '') +
 							# (f"{place_of_publication}" if place_of_publication != '' else '') +
@@ -195,6 +206,8 @@ def get_record_data(row, collection):
 							(f", {date_of_publication}" if date_of_publication != '' and publication != '' else '' ) +
 							(f"{date_of_publication}" if date_of_publication != '' and publication == '' else '' ) +							
 							(f"</div>" if publication != '' or date_of_publication != '' else '') +
+							(f"<div class='book-field'><strong>Língua: </strong>{language}</div>" if language != '' else '') +
+							(f"<div class='book-field'><strong>Edição: </strong>{edition}</div>" if edition != '' else '') +							
 							(f"<div class='book-field'><strong>Descrição física: </strong>{number_of_pages}</div>" if number_of_pages != '' else '') +
 							(f"<div class='book-field'><strong>Registo no catálogo: </strong>{catalogue_record}</div>" if catalogue_record != '' else '') +
 							(f"<div class='book-field'><strong>Digitalização integral: </strong><a href='{purl}' target='_blank'>{purl}</a></div>" if purl != '' else '') +
@@ -241,7 +254,7 @@ def create_posts(db, id, collection):
 		record = get_record_data(row, collection)
 		# val = (record["post_author"], record["post_date"], record["post_date_gmt"], record["post_content"], record["post_title"], record["post_excerpt"], record["post_status"], record["comment_status"], record["ping_status"], record["post_password"], record["post_name"], '', '', record["post_modified"], record["post_modified_gmt"], '', record["post_parent"], record["guid"], record["menu_order"], record["post_type"], '', record["comment_count"])
 		db.insert_post(record["post_author"], record["post_date"], record["post_date_gmt"], record["post_content"], record["post_title"], record["post_excerpt"], record["post_status"], record["comment_status"], record["ping_status"], record["post_password"], record["post_name"], '', '', record["post_modified"], record["post_modified_gmt"], '', record["post_parent"], record["guid"], record["menu_order"], record["post_type"], '', record["comment_count"])
-		print("\n", count, record)
+		print("\nPOST: ", count, record)
 		
 
 

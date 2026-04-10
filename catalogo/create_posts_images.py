@@ -31,6 +31,7 @@ def remove_diacritics(input_str):
 def get_record_data(row, count, collection):
 	
 	record = {}
+	# print("ROW: ", row)
 	
 	# To present the illustrator name
 	 
@@ -43,11 +44,11 @@ def get_record_data(row, count, collection):
 	ncb = row["ncb"]
 	post_id = row["ID"]
 	
-	if collection == 'imagens1' or collection == 'imagens2':
+	if collection == 'imagens' or collection == 'imagens2':
 		volume = row["volume"]
 		page_number = row['imagem']		
-		record["post_title"] = f"{ncb}-{volume}-{page_number}"
-		record["post_name"] = f"{ncb}-{volume}-{page_number}"
+		record["post_title"] = f"{ncb}{volume}{page_number}"
+		record["post_name"] = f"{ncb}{volume}{page_number}"
 	elif collection == 'catalogo':
 		record["post_title"] = ncb
 		record["post_name"] = ncb
@@ -66,13 +67,15 @@ def get_record_data(row, count, collection):
 
 	record["post_modified"] = formatted_time
 	record["post_modified_gmt"] = formatted_time
+	
+	# if collection == 'catalogo':
 	record["post_parent"] = post_id
+	# elif collection == 'imagem1' or collection == 'imagem2':
+	# 	record["post_parent"] = row['id']
 
+	if collection == 'imagens' or collection == 'imagens2':
 
-	print("COLLECTION: 	", collection)
-	if collection == 'imagens1' or collection == 'imagens2':
-
-		record["guid"] = f"{BASE_URL}/wp-content/uploads/2025/capas/{ncb}-{volume}-{page_number}.jpg"
+		record["guid"] = f"{BASE_URL}/wp-content/uploads/2025/capas/{ncb}{volume}{page_number}.jpg"
 	elif collection == 'catalogo':
 		record["guid"] = f"{BASE_URL}/wp-content/uploads/2025/capas/{ncb}.jpg"
 	
@@ -96,12 +99,10 @@ def create_posts_images(db, collection):
 	for row in results:
 		count += 1
 
-		print(row["ncb"])
-
 		record = get_record_data(row, count, collection)
 
 		db.insert_post(record["post_author"], record["post_date"], record["post_date_gmt"], record["post_content"], record["post_title"], record["post_excerpt"], record["post_status"], record["comment_status"], record["ping_status"], record["post_password"], record["post_name"], '', '', record["post_modified"], record["post_modified_gmt"], '', record["post_parent"], record["guid"], record["menu_order"], record["post_type"], record["post_mime_type"], record["comment_count"])
-		print("\n", record)
+		print("\nPOST IMAGE: ", record)
 
 
 

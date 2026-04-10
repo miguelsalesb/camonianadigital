@@ -343,7 +343,7 @@ def get_repeated_field_data(datafields, tag, codes, delimiter):
         
         names_and_relator_codes = [
             {
-            'name': f"{item.get('a', '')}{', ' + item.get('b', '') if item.get('b', '') else ''}{', ' + item.get('f', '') if item.get('f', '') else ''}",
+            'name': f"{item.get('b', '') if item.get('b', '') else ''} {item.get('a', '')}{', ' + item.get('f', '') if item.get('f', '') else ''}",
             'relator code': item.get('4', '') if item.get('4', '') else ''
             }
             for item in result_list
@@ -353,7 +353,7 @@ def get_repeated_field_data(datafields, tag, codes, delimiter):
 
         names_and_relator_codes = [
             {
-            'name': f"{item.get('a', '')}{', ' + item.get('b', '') if item.get('b', '') else ''}{', ' + item.get('f', '') if item.get('f', '') else ''}",
+            'name': f"{item.get('b', '') if item.get('b', '') else ''} {item.get('a', '')}{', ' + item.get('f', '') if item.get('f', '') else ''}",
             'relator code': item.get('4', '') if item.get('4', '') else ''
             }
             for item in result_list

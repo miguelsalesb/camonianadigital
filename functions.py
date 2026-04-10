@@ -103,16 +103,16 @@ def get_material_type(leader):
     char1 = leader[6:7]
     char2 = leader[7:8]
     
-    if (char1 == "a" or char1 == "b") and char2 == "s":
+    if char2 == "s":
         material_type = "Periódico"
     elif char1 == "e" or char1 == "f":
         material_type = "Cartografia"
     elif (char1 == "k"):
         material_type = "Iconografia"
-    elif (char1 == "a" and char2 == "m"):
-        material_type = "Livro"
+    elif (char1 == "a" or char2 == "c"):
+        material_type = "Livro impresso"
     elif (char1 == "b"):
-        material_type = "Manuscrito"
+        material_type = "Livro manuscrito"
     elif (char1 == "c" or char1 == "d"):
         material_type = "Partitura"
     elif (char1 == "l"):
@@ -246,7 +246,7 @@ def get_repeated_field_data(datafields, tag, codes, delimiter):
 
         names_and_relator_codes = [
             {
-            'name': f"{item.get('b', '')}{' ' + item.get('a', '') if item.get('a', '') else ''}{' ' + item.get('f', '') if item.get('f', '') else ''}",
+            'name': f"{item.get('b', '')}{' ' + item.get('a', '') if item.get('a', '') else ''}{', ' + item.get('f', '') if item.get('f', '') else ''}",
             # 'relator code': item.get('4', '') if item.get('4', '') else ''
             }
             for item in result_list
@@ -559,17 +559,17 @@ def convert_to_century(date):
 
     # Determine century
     if 1501 <= date_int <= 1600:
-        return "Século XVI"    
+        return "Século (1) XVI"    
     if 1601 <= date_int <= 1700:
-        return "Século XVII"
+        return "Século (2) XVII"
     elif 1701 <= date_int <= 1800:
-        return "Século XVIII"
+        return "Século (3) XVIII"
     elif 1801 <= date_int <= 1900:
-        return "Século XIX"
+        return "Século (4) XIX"
     elif 1901 <= date_int <= 2000:
-        return "Século XX"
+        return "Século (5) XX"
     elif date_int >= 2001:
-        return "Século XXI"
+        return "Século (6) XXI"
     else:
         return "Data fora do intervalo"
 

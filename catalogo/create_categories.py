@@ -5,6 +5,7 @@ from unidecode import unidecode
 import re
 from catalogo.read_csv import read_csv
 from catalogo.create_slug import create_slug
+import time
 
 
 
@@ -39,6 +40,7 @@ def create_categories(db, categories_filename, list_of_categories, category_suff
                             
                     if categories[c] != "":
                         category = categories[c]
+                        
                         slugs = []
                         for n in range(c, -1, -1):  # Use c here, not count
                             if categories[n] != "":
@@ -49,22 +51,25 @@ def create_categories(db, categories_filename, list_of_categories, category_suff
                                     slugs.append("-")
                                 else:
                                     slugs.append(slug)
-                                                
+                                slugs_text = "".join(slugs) + category_suffix                    
                         # Change before writing the slugs 
                         # to: cat, aut, ed, lang, etc.
-                                if 'Cantos' in categories:
-                                    slugs_text = "".join(slugs) + '_pa_cantos'
-                                elif 'Episódios' in categories:
-                                    slugs_text = "".join(slugs) + '_pa_episodios'
-                                elif 'Imagens' in categories:
-                                    slugs_text = "".join(slugs) + ''
-                            slugs_text = "".join(slugs) + category_suffix
-                            print(slugs_text)
+                                
+                                if 'images' in categories_filename:
+                                    if 'canto' in categories[0].lower():
+                                        
+                                        slugs_text = "".join(slugs) + '_pa_cantos'
+                                    else:
+                                        slugs_text = "".join(slugs) + '_pa_episodios'
+                                # elif 'Imagens' in categories:
+                                #     slugs_text = "".join(slugs) + ''
+                            
+                            # print(slugs_text)
                         
                 # To avoid writing a second time the first categories that don't exist in the DB
                 if slugs_text:
                     # To add the categories list to the Excel, add the count_list variable
-                    print("###", count, category, slugs_text)
+                    # print("###", count, category, slugs_text)
                     check_category = db.get_category(categories_text)
                     if check_category:
                         continue
@@ -73,12 +78,12 @@ def create_categories(db, categories_filename, list_of_categories, category_suff
             
     else:
             # list_of_categories = list_of_categories
-            print("LIST: ", list_of_categories)
+            # print("LIST: ", list_of_categories)
             # for values in list_of_categories.values():
             name = list_of_categories['term']
             slug = list_of_categories['slug']
-            print("NAME: ", name)
-            print("SLUG: ", slug)
+            print("CATEGORY: ", name)
+            # print("SLUG: ", slug)
             db.insert_category(name, slug)
 
               

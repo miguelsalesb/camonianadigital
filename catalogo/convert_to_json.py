@@ -21,7 +21,7 @@ def transform_data_for_elasticsearch(data):
     transformed_data = []
     for record in data:
         transformed_record = {
-            "id": record.pop('_id'),
+            "id": record.pop('_id'), 
             **record
         }
         transformed_data.append(transformed_record)
