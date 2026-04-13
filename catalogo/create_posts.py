@@ -125,7 +125,7 @@ def get_record_data(row, collection):
 		f_tit.flush()
 	if len(post_name) >= 100:
 		post_name = cut_string_with_more_than_100_chars(post_name)
-		post_name = post_name.lower().rstrip().replace(" ", "-").replace("  ", "").replace(",", "").replace(".", "")
+		post_name = post_name.lower().rstrip().replace(" ", "-").replace("  ", "").replace(",", "").replace(".", "").replace(";", "")
 		
 	post_name = remove_diacritics(post_name.lower().rstrip().replace(" ", "-").replace("  ", "").replace(",", "").replace(".", "").replace("&","").replace("---", "-").replace("--", "-").replace("...", ""))
 	
