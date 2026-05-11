@@ -575,7 +575,7 @@ def convert_to_century(date):
 
 
 def get_slug(field_value, key):
-
+    print("*****************", field_value, key)
     category_size = len(field_value)
     slugs_text = ""
 
@@ -592,12 +592,44 @@ def get_slug(field_value, key):
         slugs_text = slug + "_pa_tipo-de-material"
     elif 'língua' in key:
         slugs_text = slug + "_pa_lingua"
-    elif 'seculo de publicação' in key:
+    elif 'século de publicação' in key:
         slug_converted_to_century = convert_to_century(slug)
         slug = unidecode(slug_converted_to_century.lower().strip().replace(" ", "_").replace("(", "").replace(")", "").replace(",", "").replace(".", ""))
         slugs_text = slug + "_pa_seculo"
     elif 'data de publicação' in key:
         slugs_text = slug + "_pa_ano"
+        # century = convert_to_century(slug)
+        # slugs_text = century + "_pa_sec"
+    # elif 'edição' in key:
+    #     slugs_text = slug + "pa_edicao"
+        
+    return slugs_text
+
+
+def get_slug_img(field_value, key):
+    print("*****************", field_value, key)
+    category_size = len(field_value)
+    slugs_text = ""
+
+    if re.search(" ", field_value):
+        slug = unidecode(field_value.lower().strip().replace(" ", "_").replace("(", "").replace(")", "").replace(",", "").replace(".", ""))
+    else:
+        slug = unidecode(field_value.lower().strip().replace("(", "").replace(")", "").replace(",", "").replace(".", ""))
+                            
+    # Change before writing the slugs 
+    # to: category, author, edition, language, etc.
+    if 'autor' in key:
+        slugs_text = slug + "_img_tag"
+    elif 'tipo de material' in key:
+        slugs_text = slug + "_img_pa_tipo-de-material"
+    elif 'língua' in key:
+        slugs_text = slug + "_img_pa_lingua"
+    elif 'século de publicação' in key:
+        slug_converted_to_century = convert_to_century(slug)
+        slug = unidecode(slug_converted_to_century.lower().strip().replace(" ", "_").replace("(", "").replace(")", "").replace(",", "").replace(".", ""))
+        slugs_text = slug + "_img_pa_seculo"
+    elif 'data de publicação' in key:
+        slugs_text = slug + "_img_pa_ano"
         # century = convert_to_century(slug)
         # slugs_text = century + "_pa_sec"
     # elif 'edição' in key:

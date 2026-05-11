@@ -90,6 +90,17 @@ class DatabaseManager:
             print(f"Error fetching temp taxonomy: {e}")
             return [] 
 
+
+    def get_category_from_img_temp_categories(self, value):
+        cursor = self.get_cursor("wordpress_temp")
+        try:
+            cursor.execute("SELECT * FROM wordpress_temp.img_all_categories WHERE taxonomy LIKE ?", ("%" + value + "%",))
+            return cursor.fetchall()
+        except mariadb.Error as e:
+            print(f"Error fetching temp taxonomy: {e}")
+            return [] 
+
+
     def get_category(self, value):
         cursor = self.get_cursor("wordpress")
         try:
@@ -301,6 +312,20 @@ class DatabaseManager:
             self.rollback()
             print(f"Error inserting temp_category, rolled back: {e}")
 
+    def img_insert_temp_category(self, ncb, term, slug, taxonomy):
+        cursor = self.get_cursor("wordpress_temp")
+        try:
+            cursor.execute(
+                "INSERT INTO wordpress_temp.img_all_categories (ncb, term, slug, taxonomy) VALUES (?, ?, ?, ?)",
+                (ncb, term, slug, taxonomy)
+            )
+            self.commit()
+            print(f"Inserted category: {term}")
+        except mariadb.Error as e:
+            self.rollback()
+            print(f"Error inserting temp_category, rolled back: {e}")
+
+
 
     def insert_term_relationship(self, object_id, term_taxonomy_id, term_order):
         cursor = self.get_cursor("wordpress")
@@ -339,6 +364,8 @@ class DatabaseManager:
             field = 'term_id'
         elif table == 'all_categories':
             field = 'id'
+        elif table == 'img_all_categories':
+            field = 'id'            
         elif table == 'wp_term_taxonomy':
             field = 'term_taxonomy_id'
         elif table == 'wp_postmeta':

@@ -590,13 +590,13 @@ def get_data_from_non_repeatable_fields(doc_xml, object):
                         # It is not defined on the object dictionnary
                         
                         if object["name"] == 'purl':
-                            get_capa = None
-                            while get_capa is None and get_capa != 'PDF':
-                                get_capa = get_cover(subfield)
-                            if 'PDF' not in get_capa:
-                                return_data["capa"] = get_capa
-                            else:
-                                return_data["capa"] = ''
+                            # get_capa = None
+                            # while get_capa is None and get_capa != 'PDF':
+                            #     get_capa = get_cover(subfield)
+                            # if 'PDF' not in get_capa:
+                            #     return_data["capa"] = get_capa
+                            # else:
+                            return_data["capa"] = ''
 
 
                         # if object["name"] == 'purl':
@@ -747,8 +747,8 @@ with open('ncb.csv', mode='r', newline='') as file:
         
         # Generate links of the images to be downloaded
         
-        if record_data["capa"] and 'PDF' not in record_data["capa"]:
-            create_links.generate_resized_image_links(record_data["ncb"], record_data["capa"])
+        # if record_data["capa"] and 'PDF' not in record_data["capa"]:
+        #     create_links.generate_resized_image_links(record_data["ncb"], record_data["capa"])
 
         # print(record_data)
         export_to_csv.to_csv(record_data)

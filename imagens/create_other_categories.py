@@ -20,16 +20,17 @@ and the type of taxonomy
 """
 
 # my_cursor = db.cursor()
-def create_other_categories(db):
-
-  types_of_categories = {'tag': 'autor', '_pa_tipo-de-material': 'tipo de material', '_pa_lingua': 'línguas', '_pa_seculo': 'século de publicação', '_pa_ano': 'data de publicação'}
+def img_create_other_categories(db):
+  print("***********************************")
+  types_of_categories = {'_img_tag': 'autor', '_img_pa_tipo-de-material': 'tipo de material', '_img_pa_lingua': 'línguas', '_img_pa_seculo': 'século de publicação', '_img_pa_ano': 'data de publicação'}
   list_of_categories = {}
   # val_search1 = 'data de publicação'
 
   for category_suffix, taxonomy in types_of_categories.items():
     
-    get_temp_category = db.get_category_from_temp_categories(taxonomy)
+    get_temp_category = db.get_category_from_img_temp_categories(taxonomy)
     
+
     for row in get_temp_category:
         
         # print("ROW: ", row)
@@ -39,11 +40,13 @@ def create_other_categories(db):
 
         list_of_categories['term'] = term
         list_of_categories['slug'] = slug
-
-        get_category = db.get_category(term)
-        # print("CATEGORY: ", term)
+        
+        get_category = db.get_slugs(slug)
+        print("CATEGORY: ", term)
         if get_category:
            
            continue
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", list_of_categories)
+    
+    
+  
         create_categories(db,'', list_of_categories, category_suffix)

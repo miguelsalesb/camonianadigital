@@ -127,12 +127,12 @@ def get_record_data(row, collection):
 		post_name = cut_string_with_more_than_100_chars(post_name)
 		post_name = post_name.lower().rstrip().replace(" ", "-").replace("  ", "").replace(",", "").replace(".", "").replace(";", "")
 		
-	post_name = remove_diacritics(post_name.lower().rstrip().replace(" ", "-").replace("  ", "").replace(",", "").replace(".", "").replace("&","").replace("---", "-").replace("--", "-").replace("...", ""))
+	post_name = remove_diacritics(post_name.lower().rstrip().replace(" ", "-").replace("  ", "").replace(",", "").replace(".", "").replace("&","").replace("---", "-").replace("--", "-").replace("...", "").replace(";", ""))
 	
 	post_data_to_add = ''
 	
-	if collection == 'imagens' or collection == 'imagens2':
-		folder = row["pasta"]
+	if collection == 'imagens':
+		# folder = row["pasta"]
 		volume = row["volume"]
 		page_number = row['imagem']
 		page_url = row['url_pagina']

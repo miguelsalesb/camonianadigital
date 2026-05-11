@@ -78,7 +78,7 @@ def create_postmeta_metadata(db, id, collection):
     if collection == 'catalogo':
         result = db.get_posts_with_attachment_type(collection)
     
-    elif collection == 'imagens' or collection == 'imagens2':
+    elif collection == 'imagens':
         result = db.get_posts_with_attachment_type_images(collection)
 
     for row in result:
@@ -86,7 +86,7 @@ def create_postmeta_metadata(db, id, collection):
         ncb = row['post_title']
         print(post_id)
 
-        if collection == 'imagens' or collection == 'imagens2':
+        if collection == 'imagens':
             volume = row['volume']
             imagem = row['imagem']
 
@@ -105,7 +105,7 @@ def create_postmeta_metadata(db, id, collection):
                 db.insert_post_metadata(post_id, "_wp_attachment_metadata", metadata)
                 db.insert_post_metadata(post_id, "_wp_attachment_image_alt", "Capa da obra")
 
-        elif collection == 'imagens' or collection == 'imagens2':
+        elif collection == 'imagens':
                 metadata = generate_php_serialized_metadata('2025/imagens/', str(ncb))
                 db.insert_post_metadata(post_id, "_wp_attached_file", f"2025/capas/{ncb}.jpg")
                 db.insert_post_metadata(post_id, "_wp_attachment_metadata", metadata)

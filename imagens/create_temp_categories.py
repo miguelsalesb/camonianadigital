@@ -54,9 +54,9 @@ objects = [
 
 
 
-def create_temp_categories(db):
+def img_create_temp_categories(db):
 
-    with open('catalogo/ncb.csv', mode='r', newline='') as file:
+    with open('imagens/ncb.csv', mode='r', newline='') as file:
 
         while True:
             
@@ -91,7 +91,7 @@ def create_temp_categories(db):
 
                                 for field_value in fields_values:
                                                                         
-                                    slug = functions.get_slug(field_value, key)
+                                    slug = functions.get_slug_img(field_value, key)
 
                                     # There are several types of authors and they all have 'autor' in the key
                                     if 'autor' in key:
@@ -114,19 +114,19 @@ def create_temp_categories(db):
                                         if f_value == 'Século (6) XXI':
                                             f_val = 'xxi'                                                                                                                                                                                                                              
 
-                                        century_write = (ncb, f_value, f"{f_val.strip()}_pa_seculo", 'século de publicação')
+                                        century_write = (ncb, f_value, f"{f_val.strip()}_img_pa_seculo", 'século de publicação')
                                         
-                                        date_write = (ncb, values.strip(), f"{values.strip()}_pa_data", 'data de publicação')
+                                        date_write = (ncb, values.strip(), f"{values.strip()}_img_pa_data", 'data de publicação')
                                     else:
                                         val_write = (ncb, field_value.strip(), slug, key)                                    
 
                                     print(val_write)
-                                    db.insert_temp_category(*val_write)
+                                    db.img_insert_temp_category(*val_write)
                                     
                             else:
                                 if len(values) > 0:
                                     
-                                    slug = functions.get_slug(values, key)
+                                    slug = functions.get_slug_img(values, key)
                
                                     if 'data de publicação' in key or 'século de publicação' in key:
                                         f_value = functions.convert_to_century(values).strip()
@@ -143,17 +143,17 @@ def create_temp_categories(db):
                                             f_val = 'xx'  
                                         if f_value == 'Século (6) XXI':
                                             f_val = 'xxi'                                            
-                                        century_write = (ncb, f_value, f"{f_val.strip()}_pa_seculo", 'século de publicação')
+                                        century_write = (ncb, f_value, f"{f_val.strip()}_img_pa_seculo", 'século de publicação')
                                         
-                                        date_write = (ncb, values.strip(), f"{values.strip()}_pa_data", 'data de publicação')
+                                        date_write = (ncb, values.strip(), f"{values.strip()}_img_pa_data", 'data de publicação')
                                     # else:
                                     #     century_write = (ncb, values.strip(), slug, key)
                                     #     date_write = (ncb, values.strip(), f"{values.strip()}_pa_data", key)
                                         
-                                        db.insert_temp_category(*century_write)
+                                        db.img_insert_temp_category(*century_write)
                                     
-                                        db.insert_temp_category(*date_write)
+                                        db.img_insert_temp_category(*date_write)
                                     else:
                                         val_write = (ncb, values, slug, key)
-                                        db.insert_temp_category(*val_write)                                  
+                                        db.img_insert_temp_category(*val_write)                                  
     

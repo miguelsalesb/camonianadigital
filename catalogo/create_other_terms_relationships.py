@@ -28,10 +28,10 @@ def create_other_terms_relationships(db, collection, taxonomies):
         if results2:
             object_id = results2[0]['id']
             results3 = db.get_category_from_slug(slug)
-        if results3: 
-            term_id = results3[0]['term_id']
-            print("******", object_id, term_id)
-            db.insert_term_relationship(object_id, term_id, 0)
+            if results3: 
+                term_id = results3[0]['term_id']
+                print("******", object_id, term_id)
+                db.insert_term_relationship(object_id, term_id, 0)
 
 
 

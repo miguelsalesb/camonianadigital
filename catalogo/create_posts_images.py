@@ -44,7 +44,7 @@ def get_record_data(row, count, collection):
 	ncb = row["ncb"]
 	post_id = row["ID"]
 	
-	if collection == 'imagens' or collection == 'imagens2':
+	if collection == 'imagens':
 		volume = row["volume"]
 		page_number = row['imagem']		
 		record["post_title"] = f"{ncb}{volume}{page_number}"
@@ -73,7 +73,7 @@ def get_record_data(row, count, collection):
 	# elif collection == 'imagem1' or collection == 'imagem2':
 	# 	record["post_parent"] = row['id']
 
-	if collection == 'imagens' or collection == 'imagens2':
+	if collection == 'imagens':
 
 		record["guid"] = f"{BASE_URL}/wp-content/uploads/2025/capas/{ncb}{volume}{page_number}.jpg"
 	elif collection == 'catalogo':
